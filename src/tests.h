@@ -51,5 +51,52 @@ namespace FEM2A {
             return true;
         }
 
+	bool test_quadrature(int order)
+	{
+		Quadrature quad = Quadrature::get_quadrature(order);
+		std :: cout << quad.nb_points()<<std :: endl;
+		double sum = 0;
+		for (int i=0; i<quad.nb_points(); ++i ) {
+			std::cout << i << std::endl;
+			std :: cout <<quad.point(i).x<<" " 
+				<< quad.point(i).y << std::endl;
+			std::cout << quad.weight(i) << std::endl;
+			sum = sum + quad.weight(i);
+			}
+		std::cout<<sum<<std::endl;
+		return true;
+	}
+	
+	bool test_elementmapping(bool border,int i)
+	{
+	    Mesh mesh;
+            mesh.load("data/square.mesh");
+            ElementMapping map = ElementMapping(mesh,border,i);
+            vertex xr; 
+            xr.x = 0.2;
+            xr.y = 0.4 ; 
+            std::cout<<xr.x<< " "<< xr.y << " " << std :: endl;
+            vertex r = map.transform (xr);
+            std::cout<<r.x << " "<< r.y << " " << std :: endl;
+            map.jacobian_matrix( xr );
+            std::cout<< map.jacobian(xr)<<std :: endl;
+            return true;
+			
+	}
+	
+	bool test_ShapeFunctions(int dim, int order)
+	{
+	   vertex xr; 
+           xr.x = 0.2;
+           xr.y = 0.4 ; 
+	   ShapeFunctions fct = ShapeFunctions (dim,order);
+	   std::cout<< "Nombre fonctions : "<< fct.nb_functions()<<std :: endl;
+	   std::cout<< "Shape Function : " << fct.evaluate(0, xr ) << std::endl;
+           return true;
+			
+	}
+	
+ 	}
+	
     }
-}
+
