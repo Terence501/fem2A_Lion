@@ -243,11 +243,40 @@ namespace FEM2A {
     	}
     return 0. ;
     }
+    
+    
     vec2 ShapeFunctions::evaluate_grad( int i, vertex x_r ) const
     {
-        std::cout << "[ShapeFunctions] evaluate gradient shape function " << i << '\n';
-        // TODO
-        vec2 g ;
+       std::cout << "[ShapeFunctions] evaluate gradient shape function " << i << '\n';
+       vec2 g ;
+       if (dim_==1) { 
+       switch (i){
+       case 0 :
+       		g.x=-1;
+       		g.y=0;
+       		break;
+       case 1 :
+       		g.x=1;
+       		g.y=0;
+       		break;
+       }
+       }      	
+       else{ 
+       switch (i){
+       case 0 :
+       		g.x=-1;
+       		g.y=-1;
+       		break;
+       case 1 :
+       		g.x=1;
+       		g.y=0;
+       		break;
+       case 2 :         
+        	g.x=0;
+       		g.y=1;
+       		break;
+       } 
+    	}
         return g ;
     }
 
@@ -258,11 +287,24 @@ namespace FEM2A {
         const ElementMapping& elt_mapping,
         const ShapeFunctions& reference_functions,
         const Quadrature& quadrature,
-        double (*coefficient)(vertex),
+        double (*coefficient)(vertex), //unit_fct
         DenseMatrix& Ke )
     {
         std::cout << "compute elementary matrix" << '\n';
-        // TODO
+        Ke.set_size(reference_functions.nb_functions(),reference_functions.nb_functions())
+        for (int i=0; i<reference_functions.nb_functions();++i){
+        	for (int j=0; j<reference_functions.nb_functions();++j){
+        		double sum = 0
+        		DenseMatrix J = elt_mapping.jacobian_matrix( vertex x_r ) 
+        		Jinvert = J.invert_2x2()
+        		for (int q=0; q<quadrature.nb_points();++q){
+        			double gradi = Jinvert.transpose()
+        			double gradj = 
+        			w = quadrature.weight( q )
+        		get_quadrature( int order, bool border )	sum+=quadrature.weight(q)*coefficient(elt_mapping(xi,eta))*gradi*gradj*
+        			
+        		
+        
     }
 
     void local_to_global_matrix(
