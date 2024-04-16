@@ -316,7 +316,14 @@ namespace FEM2A {
         const DenseMatrix& Ke,
         SparseMatrix& K )
     {
-        std::cout << "Ke -> K" << '\n';
+    	for (int i=0; i<Ke.height();++i){
+    		int x = M.get_triangle_vertex_index(t,i);
+    			for (int j=0; j<Ke.height();++j){
+    				int y = M.get_triangle_vertex_index(t,j);
+    				K.add(x,y,Ke.get(i,j));
+    	}
+    	}
+    		
         
     }
 
@@ -361,7 +368,7 @@ namespace FEM2A {
         std::vector< double >& F )
     {
         std::cout << "apply dirichlet boundary conditions" << '\n';
-        // TODO
+        
     }
 
     void solve_poisson_problem(

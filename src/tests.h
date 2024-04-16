@@ -109,6 +109,10 @@ namespace FEM2A {
         	DenseMatrix Ke;
         	assemble_elementary_matrix(map,shapefunction,quadrature, unit_fct, Ke );
         	Ke.print();
+        	SparseMatrix K(mesh.nb_vertices());
+        	local_to_global_matrix(mesh,4,Ke,K);
+        	K.print();
+        	
         	
 	
 	}
