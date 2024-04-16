@@ -96,6 +96,25 @@ namespace FEM2A {
 			
 	}
 	
+	double unit_fct(vertex v){
+	return 1;
+	}
+	
+	void test_Ke(){
+		Mesh mesh;
+        	mesh.load("data/square.mesh");
+        	ElementMapping map = ElementMapping(mesh,false,4);
+        	ShapeFunctions shapefunction(2,1);
+        	Quadrature quadrature = Quadrature :: get_quadrature(2);
+        	DenseMatrix Ke;
+        	assemble_elementary_matrix(map,shapefunction,quadrature, unit_fct, Ke );
+        	Ke.print();
+        	
+	
+	}
+	
+	
+	
  	}
 	
     }

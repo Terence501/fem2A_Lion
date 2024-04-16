@@ -291,18 +291,21 @@ namespace FEM2A {
         DenseMatrix& Ke )
     {
         std::cout << "compute elementary matrix" << '\n';
-        Ke.set_size(reference_functions.nb_functions(),reference_functions.nb_functions())
+        Ke.set_size(reference_functions.nb_functions(),reference_functions.nb_functions());
         for (int i=0; i<reference_functions.nb_functions();++i){
         	for (int j=0; j<reference_functions.nb_functions();++j){
-        		double sum = 0
-        		DenseMatrix J = elt_mapping.jacobian_matrix( vertex x_r ) 
-        		Jinvert = J.invert_2x2()
+        		Ke.set(i,j,0);
         		for (int q=0; q<quadrature.nb_points();++q){
-        			double gradi = Jinvert.transpose()
-        			double gradj = 
-        			w = quadrature.weight( q )
-        		get_quadrature( int order, bool border )	sum+=quadrature.weight(q)*coefficient(elt_mapping(xi,eta))*gradi*gradj*
-        			
+        			vertex p_k = quadrature.point(q);
+        			double w = quadrature.weight( q );
+        			DenseMatrix J = elt_mapping.jacobian_matrix( p_k );
+        			DenseMatrix Jinvert = J.invert_2x2();
+        			vec2 gradi = Jinvert.transpose().mult_2x2_2(reference_functions.evaluate_grad(i,p_k));
+        			vec2 gradj = Jinvert.transpose().mult_2x2_2(reference_functions.evaluate_grad(j,p_k));
+        			Ke.add(i,j,w*coefficient(elt_mapping.transform(p_k))*dot(gradi,gradj)*elt_mapping.jacobian(p_k));
+        		}
+        		}
+        		}	
         		
         
     }
@@ -314,7 +317,7 @@ namespace FEM2A {
         SparseMatrix& K )
     {
         std::cout << "Ke -> K" << '\n';
-        // TODO
+        
     }
 
     void assemble_elementary_vector(
