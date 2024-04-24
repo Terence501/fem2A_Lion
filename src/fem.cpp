@@ -331,7 +331,7 @@ namespace FEM2A {
         	for (int q = 0 ; q< quadrature.nb_points(); ++q ){
         	vertex p_q = quadrature.point(q);
         	double w_q = quadrature.weight(q);
-        	Fe[i]+=w_q * reference_function_evaluate(i,p_q) * source(elt_mapping.transform(p_q) * elt_mapping_jacobian(p_q);
+        	Fe[i]+= w_q * reference_functions.evaluate(i,p_q) * source(elt_mapping.transform(p_q)) * elt_mapping.jacobian(p_q);
         	}
         }
     }
@@ -355,7 +355,16 @@ namespace FEM2A {
         std::vector< double >& F )
     {
         std::cout << "Fe -> F" << '\n';
-        // TODO
+        if ( border ) {
+        	for (int y = 0 ; y< Fe.size(); ++y) {
+        		F[M.get_edge_vertex_index(i,y)] += Fe[y];
+        	}
+        }
+        else {
+        	for (int y = 0 ; y< Fe.size(); ++y) {
+        		F[M.get_triangle_vertex_index(i,y)] += Fe[y];
+        	}
+    }
     }
 
     void apply_dirichlet_boundary_conditions(

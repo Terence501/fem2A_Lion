@@ -112,14 +112,28 @@ namespace FEM2A {
         	SparseMatrix K(mesh.nb_vertices());
         	local_to_global_matrix(mesh,4,Ke,K);
         	K.print();
+        	}
+        
+        void test_F(){
+        	Mesh mesh;
+        	mesh.load("data/square.mesh");
+        	ElementMapping map = ElementMapping(mesh,false,4);
+        	ShapeFunctions shapefunction(2,1);
+        	Quadrature quadrature = Quadrature :: get_quadrature(2);
+        	std::vector <double> Fe;
+        	assemble_elementary_vector(map,shapefunction,quadrature, unit_fct, Fe);
+        	std::vector <double> F;
+        	local_to_global_vector(mesh,false,4,Fe,F);
+        	
+        	}
         	
         	
+	
 	
 	}
 	
 	
-	
  	}
 	
-    }
+    
 

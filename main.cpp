@@ -34,7 +34,8 @@ void run_tests()
     const bool t_quad = false;
     const bool t_elemap = false;
     const bool t_shapefunction = false;
-    const bool t_Ke = true;
+    const bool t_Ke = false;
+    const bool t_F= false;
 
     if( t_opennl ) test_opennl();
     if( t_lmesh ) Tests::test_load_mesh();
@@ -43,6 +44,7 @@ void run_tests()
     if (t_elemap) Tests :: test_elementmapping(false, 4);
     if (t_shapefunction) Tests :: test_ShapeFunctions( 1,  1);
     if (t_Ke) Tests :: test_Ke();
+    if (t_F) Tests :: test_F();
 }
 
 void run_simu()
@@ -54,7 +56,8 @@ void run_simu()
         || flag_is_used( "--verbose", arguments );
 
     if( simu_pure_dirichlet ) {
-        Simu::pure_dirichlet_pb("data/square.mesh", verbose);
+        //Simu::pure_dirichlet_pb("data/square_fine.mesh", verbose);
+        Simu :: dirichlet_ts_pb("data/square_fine.mesh",verbose);
     }
 }
 
