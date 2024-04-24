@@ -326,7 +326,14 @@ namespace FEM2A {
         std::vector< double >& Fe )
     {
         std::cout << "compute elementary vector (source term)" << '\n';
-        // TODO
+        for (int i = 0 ; i< reference_functions.nb_functions(); ++i ) {
+        	Fe.push_back(0);
+        	for (int q = 0 ; q< quadrature.nb_points(); ++q ){
+        	vertex p_q = quadrature.point(q);
+        	double w_q = quadrature.weight(q);
+        	Fe[i]+=w_q * reference_function_evaluate(i,p_q) * source(elt_mapping.transform(p_q) * elt_mapping_jacobian(p_q);
+        	}
+        }
     }
 
     void assemble_elementary_neumann_vector(
