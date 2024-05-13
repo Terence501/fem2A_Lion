@@ -325,7 +325,7 @@ namespace FEM2A {
         double (*source)(vertex),
         std::vector< double >& Fe )
     {
-        std::cout << "compute elementary vector (source term)" << '\n';
+        
         for (int i = 0 ; i< reference_functions.nb_functions(); ++i ) {
         	Fe.push_back(0);
         	for (int q = 0 ; q< quadrature.nb_points(); ++q ){
@@ -343,8 +343,6 @@ namespace FEM2A {
         double (*neumann)(vertex),
         std::vector< double >& Fe )
     {
-        std::cout << "compute elementary vector (neumann condition)" << '\n';
-        // TODO
     }
 
     void local_to_global_vector(
@@ -354,7 +352,6 @@ namespace FEM2A {
         std::vector< double >& Fe,
         std::vector< double >& F )
     {
-        std::cout << "Fe -> F" << '\n';
         if ( border ) {
         	for (int y = 0 ; y< Fe.size(); ++y) {
         		F[M.get_edge_vertex_index(i,y)] += Fe[y];
