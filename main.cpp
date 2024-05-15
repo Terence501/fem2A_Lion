@@ -56,11 +56,11 @@ void run_simu()
         || flag_is_used( "--verbose", arguments );
 
     if( simu_pure_dirichlet ) {
-        Simu::pure_dirichlet_pb("data/square_fine.mesh", verbose);
-        Simu :: dirichlet_ts_pb("data/square_fine.mesh",verbose);
+        //Simu::pure_dirichlet_pb("data/square.mesh", verbose);
+        //Simu :: dirichlet_ts_pb("data/square.mesh",verbose);
         //Simu :: pb_sinus_bump("data/square.mesh",verbose);
-       //Simu :: sol_exacte("data/square_fine.mesh",verbose);
-       // Simu :: ecart_sinus_bump("data/square.mesh",verbose);
+        //Simu :: sol_exacte("data/square.mesh",verbose);
+        Simu :: ecart_sinus_bump("data/square.mesh",verbose);
     }
 }
 

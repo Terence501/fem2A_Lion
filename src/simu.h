@@ -129,7 +129,7 @@ namespace FEM2A {
             solve(K,F,u);
             
             std::cout << "Système résolu" << std::endl;
-            std :: string export_name = "dirichlet_ts";
+            std :: string export_name = "dirichlet_ts_square";
             mesh.save(export_name + ".mesh");
             save_solution(u,export_name + ".bb");
         }
@@ -176,7 +176,7 @@ namespace FEM2A {
             solve(K,F,u);
             
             std::cout << "Système résolu" << std::endl;
-            std :: string export_name = "test_sinus_bump";
+            std :: string export_name = "test_sinus_bump_square";
             mesh.save(export_name + ".mesh");
             save_solution(u,export_name + ".bb");
         }
@@ -191,7 +191,7 @@ namespace FEM2A {
             	for (int i =0 ; i < mesh.nb_vertices() ; ++ i ){
             	u[i] = std :: sin(pi*mesh.get_vertex(i).x)*std::sin(pi*mesh.get_vertex(i).y);
             	}	
-            	std :: string export_name = "sinus_exact";
+            	std :: string export_name = "sinus_exact_square";
            	mesh.save (export_name + ".mesh");
            	save_solution(u, export_name+".bb");
            	}
@@ -238,14 +238,16 @@ namespace FEM2A {
 	    
 	    std::vector< double > ecart(mesh.nb_vertices(),0);
 	    const double pi = std::acos(-1);
+	    double somme;
 	    for (int i =0 ; i < mesh.nb_vertices() ; ++i ){
 		ecart[i] = std::abs((std :: sin(pi*mesh.get_vertex(i).x)*std::sin(pi*mesh.get_vertex(i).y))-u[i]);
+		somme+=ecart[i];
 		   }
-
-	   std :: string export_name = "ecart_sinus";
+	   std :: string export_name = "ecart_sinus_square";
            mesh.save (export_name + ".mesh");
 	   save_solution(ecart, export_name+".bb");
-
+	   somme =somme/mesh.nb_vertices();
+	   std::cout << "Erreur totale divisée par le nombre de triangles : " << somme << std::endl;
 
 	}
 }
